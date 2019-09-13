@@ -10,11 +10,8 @@ $Passwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto($PwdPointer) # Then
 $WebRequest = invoke-webrequest -uri <PleasePutUriHere> -SessionVariable Session #This line initializes the variable WebRequest, and invokes a request to the defined page. We expect it to return a form containing an form ID, an empty username field, and an empty passwd field. We also expect it to return a set of cookies associated with the user session. This session variable is called Session. 
 
 $fID = $WebRequest.Forms.Fields.form_id # We take a look at the result of the webrequest, and we grab the value of form_id and pass it to the variable fID.
-
 $Response = @{"form_id" = $fID;"form_name" = "login";"email_address" = $email;"password" = $Passwd;"login_submit" = "Login"} #This line is the response information we will pass back to the site to authenticate. It is made up of an array with the three previously specified values, and with the name of the form, and  a login action.
-
 $Header = @{Accept = '*/*'} #This field is the Header field, which allows us to accept any and all content types
 
 $WebRequest = invoke-webrequest -uri  -WebSession $Session -Method POST -Body $Response -Headers $Header #This line sends the authentication data to the page and allows us to log in. 
-
 }
